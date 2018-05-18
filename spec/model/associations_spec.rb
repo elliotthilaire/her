@@ -759,6 +759,33 @@ describe Her::Model::Associations do
       expect(subject.where(role: "committer").association
         .params).to include :role
     end
+
+    context "when the associated value is nil" do
+      let(:associated_value) { nil }
+      it "subject is nil" do
+        expect(subject).to be_nil
+      end
+
+      it "subject is falsy" do
+        expect(subject).to be_falsy
+      end
+
+      it "subject.nil? is true" do
+        expect(subject.nil?).to eq(true)
+      end
+
+      it "subject.present? is false" do
+        expect(subject.present?).to eq(false)
+      end
+
+      it "subject.empty? raises NoMethodError" do
+        expect { subject.empty? }.to raise_error(NoMethodError)
+      end
+
+      it "(subject ? 'is truthy' : 'is falsy') is 'is falsy'" do
+        expect(subject ? 'is truthy' : 'is falsy' ).to eq('is falsy')
+      end
+    end
   end
 
   context "building and creating association data" do
